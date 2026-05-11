@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>hamyunguu — photography</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/cfd7hxi.css">
 <style>
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,7 +13,7 @@
   --bg:    #ffffff;
   --text:  #000000;
   --muted: #777777;
-  --sans:  'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sans:  'lowan-old-style', Georgia, serif;
   --nav-h: 52px;
   --pad:   48px;
 }
@@ -121,6 +119,7 @@ nav {
   min-width: 80px;
   padding-top: 8px;
 }
+.nav-item:hover .nav-dropdown,
 .nav-item.open .nav-dropdown {
   opacity: 1;
   pointer-events: auto;
@@ -287,10 +286,11 @@ nav {
 
 .feed-meta-l {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
   padding-right: 72px;
-  gap: 10px;
+  gap: 5px;
 }
 .feed-meta-r {
   display: flex;
@@ -306,11 +306,18 @@ nav {
   display: flex;
   flex-direction: column;
 }
+.feed-name {
+  font-size: 7.5px;
+  font-weight: 200;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
 .feed-caption {
-  font-size: 11px;
+  display: none;
+  font-size: 10px;
   font-weight: 200;
   color: #555;
-  padding-top: 10px;
+  padding: 8px 0 24px;
   letter-spacing: 0.01em;
 }
 .feed-cat {
@@ -713,7 +720,7 @@ footer p {
   .feed-row { display: block; }
   .feed-meta-l, .feed-meta-r { display: none !important; }
   .feed-center { display: flex; flex-direction: column; width: 100%; }
-  .feed-caption { font-size: 10px; padding: 8px 0 24px; }
+  .feed-caption { display: block; }
 
   /* works strip */
   .strip-thumb { height: 52vw; }
@@ -777,103 +784,103 @@ footer p {
   <div class="feed">
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">01</span></div>
+      <div class="feed-meta-l"><span class="feed-num">01</span><span class="feed-name">Kim Insig</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('kim-insig')"><img src="2026.02 Kim Insig_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Kim Insig</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2026</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">02</span></div>
+      <div class="feed-meta-l"><span class="feed-num">02</span><span class="feed-name">ACC</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('acc-objects')"><img src="2025.10 ACC_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">ACC</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">03</span></div>
+      <div class="feed-meta-l"><span class="feed-num">03</span><span class="feed-name">TWL</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('twl')"><img src="2025.09 TWL_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">TWL</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">04</span></div>
+      <div class="feed-meta-l"><span class="feed-num">04</span><span class="feed-name">Old Barber Place</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('old-barber-place')"><img src="2025.09 OldBarberPlace_Spaces/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Old Barber Place</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">05</span></div>
+      <div class="feed-meta-l"><span class="feed-num">05</span><span class="feed-name">DDP</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('ddp')"><img src="2025.09 DDP_ Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">DDP</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">06</span></div>
+      <div class="feed-meta-l"><span class="feed-num">06</span><span class="feed-name">Heomoody</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('heomoody')"><img src="2025.09 Heomoody_objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Heomoody</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">07</span></div>
+      <div class="feed-meta-l"><span class="feed-num">07</span><span class="feed-name">MMCA</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('mmca')"><img src="2025.08 MMCA_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">MMCA</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">08</span></div>
+      <div class="feed-meta-l"><span class="feed-num">08</span><span class="feed-name">Kim Hanyoung</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('kim-hanyoung')"><img src="2025.07 Kim Hanyoung_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Kim Hanyoung</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">09</span></div>
+      <div class="feed-meta-l"><span class="feed-num">09</span><span class="feed-name">Peter Ivy</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('peter-ivy')"><img src="2025.06 Peter Ivy_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Peter Ivy</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">10</span></div>
+      <div class="feed-meta-l"><span class="feed-num">10</span><span class="feed-name">Behind the Doors</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('behind-the-doors')"><img src="2025.06 Behind the Doors_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Behind the Doors</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">11</span></div>
+      <div class="feed-meta-l"><span class="feed-num">11</span><span class="feed-name">Workshop</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('workshop')"><img src="2025.05 Workshop _Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Workshop</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">12</span></div>
+      <div class="feed-meta-l"><span class="feed-num">12</span><span class="feed-name">Foh</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('foh')"><img src="2025.02 Foh_objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Foh</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">13</span></div>
+      <div class="feed-meta-l"><span class="feed-num">13</span><span class="feed-name">Songeun</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('songeun')"><img src="2024.09 Songeun_Spaces/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Songeun</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">14</span></div>
+      <div class="feed-meta-l"><span class="feed-num">14</span><span class="feed-name">Poul Kjaeholm</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('poul-kjaeholm')"><img src="2024.08 Poul Kjaeholm_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Poul Kjaeholm</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">15</span></div>
+      <div class="feed-meta-l"><span class="feed-num">15</span><span class="feed-name">Younhyun Library</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('younhyun-library')"><img src="2024.07 Younhyun Library_Space/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Younhyun Library</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">16</span></div>
+      <div class="feed-meta-l"><span class="feed-num">16</span><span class="feed-name">Leeum</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('leeum')"><img src="2024.01 Leeum_Space/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Leeum</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">17</span></div>
+      <div class="feed-meta-l"><span class="feed-num">17</span><span class="feed-name">Kim Changyeul</span></div>
       <div class="feed-center"><div class="feed-img" onclick="showProject('kim-changyeul')"><img src="2023.10 Kim Changyeul_Space/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Kim Changyeul</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2023</span></div>
     </div>
