@@ -631,16 +631,24 @@ footer p {
 
 /* ── LIGHTBOX ── */
 #lightbox {
-  display: none;
+  display: flex;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.92);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   z-index: 800;
   align-items: center;
   justify-content: center;
   cursor: zoom-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
 }
-#lightbox.active { display: flex; }
+#lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 #lightbox img {
   max-width: 90vw;
   max-height: 90vh;
@@ -649,7 +657,7 @@ footer p {
   object-fit: contain;
   pointer-events: none;
 }
-.wd-full img, .wd-col img { cursor: zoom-in; }
+.wd-full img, .wd-col img, .g-img { cursor: zoom-in; }
 
 /* ── UTILS ── */
 .hidden { display: none !important; }
@@ -1287,20 +1295,25 @@ function showProject(id) {
   const gallery = document.getElementById('gallery-content');
   gallery.innerHTML = '';
 
+  const gi = (src) => {
+    const s = src.replace(/'/g, "\\'");
+    return `<img src="${src}" class="g-img" loading="lazy" alt="" onclick="openLightbox('${s}')">`;
+  };
+
   const heroes = heroImages[id] || [];
   if (heroes.length === 1) {
-    gallery.innerHTML += `<div class="g-full-wrap"><img src="${p.folder}/${heroes[0]}" class="g-img" loading="lazy" alt=""></div>`;
+    gallery.innerHTML += `<div class="g-full-wrap">${gi(`${p.folder}/${heroes[0]}`)}</div>`;
   } else if (heroes.length === 2) {
-    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col"><img src="${p.folder}/${heroes[0]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${heroes[1]}" class="g-img" loading="lazy" alt=""></div></div></div>`;
+    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col">${gi(`${p.folder}/${heroes[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[1]}`)}</div></div></div>`;
   } else if (heroes.length >= 3) {
-    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-3col-inner"><div class="g-col"><img src="${p.folder}/${heroes[0]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${heroes[1]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${heroes[2]}" class="g-img" loading="lazy" alt=""></div></div></div>`;
+    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-3col-inner"><div class="g-col">${gi(`${p.folder}/${heroes[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[1]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[2]}`)}</div></div></div>`;
   }
 
   p.layout.forEach(item => {
     if (item.type === 'full') {
-      gallery.innerHTML += `<div class="g-full-wrap"><img src="${p.folder}/${item.file}" class="g-img" loading="lazy" alt=""></div>`;
+      gallery.innerHTML += `<div class="g-full-wrap">${gi(`${p.folder}/${item.file}`)}</div>`;
     } else if (item.type === '2col') {
-      gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col"><img src="${p.folder}/${item.files[0]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${item.files[1]}" class="g-img" loading="lazy" alt=""></div></div></div>`;
+      gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col">${gi(`${p.folder}/${item.files[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${item.files[1]}`)}</div></div></div>`;
     }
   });
 
