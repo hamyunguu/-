@@ -1209,7 +1209,7 @@ function openContact() {
   overlay.classList.add('visible');
   overlay.scrollTop = 0;
   document.getElementById('nav-contact').classList.add('active');
-  document.body.style.overflow = 'hidden';
+  lockScroll();
 }
 
 function closeContact() {
@@ -1218,10 +1218,25 @@ function closeContact() {
   overlay.classList.remove('visible');
   overlay.classList.add('hiding');
   document.getElementById('nav-contact').classList.remove('active');
-  document.body.style.overflow = '';
+  unlockScroll();
   overlay.addEventListener('animationend', function handler() {
     overlay.classList.remove('hiding');
   }, { once: true });
+}
+
+function lockScroll() {
+  const y = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${y}px`;
+  document.body.style.width = '100%';
+  document.body.dataset.scrollY = y;
+}
+function unlockScroll() {
+  const y = parseInt(document.body.dataset.scrollY || '0');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, y);
 }
 
 function openAbout() {
@@ -1229,7 +1244,7 @@ function openAbout() {
   overlay.classList.add('visible');
   overlay.scrollTop = 0;
   document.getElementById('nav-about').classList.add('active');
-  document.body.style.overflow = 'hidden';
+  lockScroll();
 }
 
 function closeAbout() {
@@ -1238,7 +1253,7 @@ function closeAbout() {
   overlay.classList.remove('visible');
   overlay.classList.add('hiding');
   document.getElementById('nav-about').classList.remove('active');
-  document.body.style.overflow = '';
+  unlockScroll();
   overlay.addEventListener('animationend', function handler() {
     overlay.classList.remove('hiding');
     overlay.removeEventListener('animationend', handler);
