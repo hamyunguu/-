@@ -121,7 +121,7 @@ nav {
   min-width: 80px;
   padding-top: 8px;
 }
-.nav-item:hover .nav-dropdown {
+.nav-item.open .nav-dropdown {
   opacity: 1;
   pointer-events: auto;
 }
@@ -706,7 +706,6 @@ footer p {
   *, *::before, *::after { cursor: auto !important; }
 
   /* nav */
-  .nav-dropdown { display: none !important; }
   #nav-works { cursor: pointer; }
 
   /* feed */
@@ -1662,10 +1661,28 @@ document.getElementById('page-works').addEventListener('click', (e) => {
   closeCardDetail();
 });
 
-// ─── MOBILE: Works nav tap ───
-if ('ontouchstart' in window) {
-  document.getElementById('nav-works').addEventListener('click', () => showWorksCategory('all'));
-}
+// ─── WORKS NAV: click to toggle dropdown ───
+;(function() {
+  const navItem = document.querySelector('.nav-item');
+  const navWorks = document.getElementById('nav-works');
+
+  navWorks.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navItem.classList.toggle('open');
+  });
+
+  // 카테고리 클릭 시 드롭다운 닫기
+  navItem.querySelectorAll('.nav-dropdown-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navItem.classList.remove('open');
+    });
+  });
+
+  // 외부 클릭 시 닫기
+  document.addEventListener('click', () => {
+    navItem.classList.remove('open');
+  });
+})();
 
 // ─── CUSTOM CURSOR ───
 ;(function() {
