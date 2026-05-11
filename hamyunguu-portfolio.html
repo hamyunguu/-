@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hamyunguu — photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:    #ffffff;
+  --text:  #000000;
+  --muted: #777777;
+  --sans:  'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --nav-h: 52px;
+  --pad:   48px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 200;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--pad);
+  z-index: 100;
+}
+
+.logo {
+  font-size: 11px;
+  font-weight: 200;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  font-family: var(--sans);
+}
+
+.nav-links { display: flex; gap: 28px; align-items: center; }
+
+.nav-link {
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  font-family: var(--sans);
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--text); }
+
+/* ── WORKS DROPDOWN ── */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-item::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -12px;
+  right: -12px;
+  height: 20px;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  min-width: 80px;
+  padding-top: 8px;
+}
+.nav-item:hover .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-dropdown-item {
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none; border: none;
+  cursor: pointer; padding: 7px 0;
+  font-family: var(--sans);
+  transition: color 0.15s;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+.nav-dropdown-item:hover { color: var(--text); }
+
+/* ── PAGES ── */
+.page {
+  display: none;
+  flex-direction: column;
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+  animation: fadeIn 0.28s ease both;
+}
+.page.visible { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ── HOME HERO ── */
+.hero-split {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 1fr 1.5fr;
+  gap: 3px;
+  height: calc(88vh - var(--nav-h));
+  padding: 16px var(--pad) 0;
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: #e8e8e8;
+}
+.hero-panel-main { grid-row: 1 / 3; }
+
+.hero-img-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: var(--pos, 50% 50%);
+  transition: opacity 0.2s;
+}
+.hero-panel:hover .hero-img-fill { opacity: 0.88; }
+
+/* ── HOME RECENT ── */
+.home-recent { padding: 48px var(--pad) 0; }
+
+.section-label {
+  font-size: 7.5px;
+  font-weight: 200;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 18px;
+}
+
+.recent-slider {
+  display: flex;
+  gap: 3px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+.recent-slider.grabbing { cursor: grabbing; }
+.recent-slider::-webkit-scrollbar { display: none; }
+
+.recent-card {
+  flex: 0 0 calc((100% - 12px) / 5);
+  cursor: pointer;
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.recent-thumb {
+  aspect-ratio: 3/4;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: #e8e8e8;
+}
+.recent-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: var(--pos, 50% 50%);
+  display: block;
+  transition: opacity 0.2s;
+}
+.recent-card:hover .recent-thumb img { opacity: 0.82; }
+
+.recent-title {
+  font-size: 8px;
+  font-weight: 200;
+  color: var(--text);
+  margin-bottom: 3px;
+  letter-spacing: 0.03em;
+}
+.recent-meta {
+  font-size: 7.5px;
+  font-weight: 200;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── WORKS FEED ── */
+.works-page-header {
+  padding: 44px var(--pad) 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.works-heading {
+  font-size: 7.5px;
+  font-weight: 200;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.filter-row { display: flex; gap: 20px; }
+.filter-btn {
+  font-size: 7.5px;
+  font-weight: 200;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  font-family: var(--sans);
+  transition: color 0.15s;
+}
+.filter-btn:hover, .filter-btn.active { color: var(--text); }
+
+.feed {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 560px) 1fr;
+  row-gap: 3px;
+}
+
+.feed-meta-l {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 72px;
+  gap: 10px;
+}
+.feed-meta-r {
+  display: flex;
+  align-items: center;
+  padding-left: 72px;
+}
+.feed-num {
+  font-size: 9px;
+  font-weight: 200;
+  color: var(--muted);
+}
+.feed-name {
+  font-size: 13px;
+  font-weight: 200;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.feed-cat {
+  font-size: 9px;
+  font-weight: 200;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.feed-img {
+  cursor: pointer;
+  overflow: hidden;
+  display: block;
+}
+.feed-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.2s;
+}
+.feed-img:hover img { opacity: 0.88; }
+
+.feed-row { display: contents; }
+.feed-row.hidden { display: none; }
+
+/* ── PROJECT DETAIL ── */
+.breadcrumb {
+  padding: 22px var(--pad) 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.breadcrumb span, .breadcrumb button {
+  font-size: 7.5px;
+  font-weight: 200;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  font-family: var(--sans);
+  transition: color 0.15s;
+}
+.breadcrumb button:hover { color: var(--text); }
+
+.proj-header {
+  padding: 28px var(--pad) 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.proj-cat-label {
+  font-size: 7.5px;
+  font-weight: 200;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 9px;
+}
+.proj-name {
+  font-size: 22px;
+  font-weight: 200;
+  color: var(--text);
+  line-height: 1.2;
+}
+.proj-credit {
+  font-size: 7.5px;
+  font-weight: 200;
+  color: var(--muted);
+  text-align: right;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 560px) 1fr;
+  row-gap: 3px;
+  padding: 3px 0 0;
+}
+.g-full-wrap, .g-multi-wrap { grid-column: 2; }
+.g-img {
+  display: block;
+  width: 100%; height: auto;
+}
+.g-2col-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+.g-3col-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3px;
+}
+.g-col .g-img { width: 100%; height: auto; }
+
+.proj-nav-bar {
+  padding: 28px var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pnav-back {
+  font-size: 7.5px;
+  font-weight: 200;
+  color: var(--muted);
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  font-family: var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.pnav-back:hover { color: var(--text); }
+.pnav-next {
+  font-size: 8px;
+  font-weight: 200;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: right;
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+.pnav-next:hover { color: var(--text); }
+
+/* ── ABOUT OVERLAY ── */
+.about-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 200;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nav-h) var(--pad) 48px;
+}
+.about-overlay.visible {
+  display: flex;
+  animation: fadeIn 0.28s ease both;
+}
+.about-overlay.hiding {
+  display: flex;
+  animation: fadeOut 0.22s ease both;
+  pointer-events: none;
+}
+
+.about-wrap {
+  width: 100%;
+  max-width: 480px;
+  cursor: default;
+}
+.about-content { padding: 0; }
+.about-photo {
+  width: 150px;
+  aspect-ratio: 3/4;
+  background: #e8e8e8;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-name {
+  font-size: 18px;
+  font-weight: 200;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+.about-role {
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+.about-bio {
+  font-size: 14px;
+  font-weight: 200;
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 14px;
+}
+.about-bio-sub {
+  font-size: 11px;
+  font-weight: 200;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 36px;
+}
+.contact-line {
+  display: block;
+  font-size: 13px;
+  font-weight: 200;
+  color: var(--muted);
+  text-decoration: none;
+  line-height: 2.2;
+  transition: color 0.15s;
+}
+.contact-line:hover { color: var(--text); }
+
+.about-contact-label, .list-label {
+  font-size: 7.5px;
+  font-weight: 200;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.about-contact-link {
+  font-size: 11px;
+  font-weight: 200;
+  color: var(--text);
+  margin-bottom: 40px;
+}
+.collab-list { list-style: none; margin-bottom: 36px; }
+.collab-item {
+  padding: 10px 0;
+  font-size: 11px;
+  font-weight: 200;
+  color: var(--text);
+}
+.avail-list { list-style: none; }
+.avail-item {
+  font-size: 11px;
+  font-weight: 200;
+  color: var(--muted);
+  line-height: 2.2;
+}
+
+/* ── WORKS STRIP ── */
+.strip-container {
+  display: flex;
+  gap: 3px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 32px 0 0;
+  align-items: flex-start;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
+}
+
+.strip-container::-webkit-scrollbar { display: none; }
+
+.strip-card {
+  flex: 0 0 auto;
+  cursor: pointer;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+.strip-thumb {
+  height: 42vh;
+  overflow: hidden;
+}
+.strip-thumb img {
+  display: block;
+  height: 100%;
+  width: auto;
+  pointer-events: none;
+}
+.strip-card-name {
+  font-size: 9px;
+  font-weight: 200;
+  color: var(--muted);
+  padding: 8px var(--pad) 0;
+  letter-spacing: 0.02em;
+}
+.strip-card.dimmed {
+  opacity: 0.12;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* ── WORKS INLINE DETAIL ── */
+.works-detail {
+  display: none;
+  padding-top: 48px;
+  animation: fadeIn 0.3s ease both;
+}
+.works-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 560px) 1fr;
+  row-gap: 3px;
+}
+.wd-full { grid-column: 2; }
+.wd-full img { display: block; width: 100%; height: auto; }
+.wd-multi { grid-column: 2; }
+.wd-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.wd-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; }
+.wd-col img { display: block; width: 100%; height: auto; }
+
+.wd-close {
+  grid-column: 2;
+  padding: 28px 0 0;
+  font-size: 8px;
+  font-weight: 200;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  background: none; border: none;
+  font-family: var(--sans);
+  transition: color 0.15s;
+  text-align: left;
+}
+.wd-close:hover { color: var(--text); }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: auto;
+  padding: 28px var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer p {
+  font-size: 9.5px;
+  font-weight: 200;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── PAGE LOADER ── */
+#page-loader {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+#page-loader.active { display: flex; }
+
+#loader-canvas {
+  width: 22px;
+  height: 22px;
+}
+#loader-expand {
+  display: none;
+}
+
+/* ── LIGHTBOX ── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 800;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+#lightbox.active { display: flex; }
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+.wd-full img, .wd-col img { cursor: zoom-in; }
+
+/* ── UTILS ── */
+.hidden { display: none !important; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  :root { --pad: 20px; --nav-h: 48px; }
+
+  .hero-split {
+    grid-template-columns: 1fr;
+    grid-template-rows: 56vw 36vw 36vw;
+    height: auto; gap: 3px;
+    padding: 10px var(--pad) 0;
+  }
+  .hero-panel-main { grid-row: auto; }
+
+  .recent-card { flex: 0 0 calc((100% - 3px) / 2); }
+  .recent-slider { gap: 3px; }
+
+  .works-page-header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 28px var(--pad) 18px; }
+
+  .feed { grid-template-columns: 0 1fr 0; }
+  .feed-meta-l, .feed-meta-r { display: none !important; }
+
+  .gallery { grid-template-columns: 0 1fr 0; }
+  .g-full-wrap, .g-multi-wrap { grid-column: 2; }
+  .g-2col-inner { grid-template-columns: 1fr; }
+  .g-3col-inner { grid-template-columns: 1fr; }
+
+  .proj-header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 20px var(--pad); }
+  .proj-credit { text-align: left; }
+  .proj-name { font-size: 18px; }
+  .proj-nav-bar { padding: 20px var(--pad); }
+
+  .about-overlay { align-items: flex-start; padding-top: calc(var(--nav-h) + 32px); overflow-y: auto; }
+  .about-wrap { max-width: 100%; }
+
+  footer { flex-direction: column; gap: 4px; align-items: flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <button class="logo" onclick="showPage('home')">hamyunguu</button>
+  <div class="nav-links">
+    <div class="nav-item">
+      <span class="nav-link" id="nav-works">Works</span>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-item" onclick="showWorksCategory('all')">All</button>
+        <button class="nav-dropdown-item" onclick="showWorksCategory('objects')">Objects</button>
+        <button class="nav-dropdown-item" onclick="showWorksCategory('spaces')">Spaces</button>
+        <button class="nav-dropdown-item" onclick="showWorksCategory('works')">Sketches</button>
+      </div>
+    </div>
+    <button class="nav-link" id="nav-about" onclick="showPage('about')">About</button>
+    <button class="nav-link" id="nav-contact" onclick="openContact()">Contact</button>
+  </div>
+</nav>
+
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="page visible" id="page-home">
+
+  <div class="feed">
+
+    <div class="feed-row" data-cat="objects">
+      <div class="feed-meta-l"><span class="feed-num">01</span><span class="feed-name">Kim Insig</span></div>
+      <div class="feed-img" onclick="showProject('kim-insig')"><img src="2026.02 Kim Insig_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Objects · 2026</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="objects">
+      <div class="feed-meta-l"><span class="feed-num">02</span><span class="feed-name">ACC</span></div>
+      <div class="feed-img" onclick="showProject('acc-objects')"><img src="2025.10 ACC_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="objects">
+      <div class="feed-meta-l"><span class="feed-num">03</span><span class="feed-name">TWL</span></div>
+      <div class="feed-img" onclick="showProject('twl')"><img src="2025.09 TWL_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="spaces">
+      <div class="feed-meta-l"><span class="feed-num">04</span><span class="feed-name">Old Barber Place</span></div>
+      <div class="feed-img" onclick="showProject('old-barber-place')"><img src="2025.09 OldBarberPlace_Spaces/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Spaces · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="works">
+      <div class="feed-meta-l"><span class="feed-num">05</span><span class="feed-name">DDP</span></div>
+      <div class="feed-img" onclick="showProject('ddp')"><img src="2025.09 DDP_ Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="objects">
+      <div class="feed-meta-l"><span class="feed-num">06</span><span class="feed-name">Heomoody</span></div>
+      <div class="feed-img" onclick="showProject('heomoody')"><img src="2025.09 Heomoody_objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="works">
+      <div class="feed-meta-l"><span class="feed-num">07</span><span class="feed-name">MMCA</span></div>
+      <div class="feed-img" onclick="showProject('mmca')"><img src="2025.08 MMCA_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="works">
+      <div class="feed-meta-l"><span class="feed-num">08</span><span class="feed-name">Kim Hanyoung</span></div>
+      <div class="feed-img" onclick="showProject('kim-hanyoung')"><img src="2025.07 Kim Hanyoung_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="objects">
+      <div class="feed-meta-l"><span class="feed-num">09</span><span class="feed-name">Peter Ivy</span></div>
+      <div class="feed-img" onclick="showProject('peter-ivy')"><img src="2025.06 Peter Ivy_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="works">
+      <div class="feed-meta-l"><span class="feed-num">10</span><span class="feed-name">Behind the Doors</span></div>
+      <div class="feed-img" onclick="showProject('behind-the-doors')"><img src="2025.06 Behind the Doors_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="works">
+      <div class="feed-meta-l"><span class="feed-num">11</span><span class="feed-name">Workshop</span></div>
+      <div class="feed-img" onclick="showProject('workshop')"><img src="2025.05 Workshop _Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="objects">
+      <div class="feed-meta-l"><span class="feed-num">12</span><span class="feed-name">Foh</span></div>
+      <div class="feed-img" onclick="showProject('foh')"><img src="2025.02 Foh_objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="spaces">
+      <div class="feed-meta-l"><span class="feed-num">13</span><span class="feed-name">Songeun</span></div>
+      <div class="feed-img" onclick="showProject('songeun')"><img src="2024.09 Songeun_Spaces/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="works">
+      <div class="feed-meta-l"><span class="feed-num">14</span><span class="feed-name">Poul Kjaeholm</span></div>
+      <div class="feed-img" onclick="showProject('poul-kjaeholm')"><img src="2024.08 Poul Kjaeholm_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Sketches · 2024</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="spaces">
+      <div class="feed-meta-l"><span class="feed-num">15</span><span class="feed-name">Younhyun Library</span></div>
+      <div class="feed-img" onclick="showProject('younhyun-library')"><img src="2024.07 Younhyun Library_Space/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="spaces">
+      <div class="feed-meta-l"><span class="feed-num">16</span><span class="feed-name">Leeum</span></div>
+      <div class="feed-img" onclick="showProject('leeum')"><img src="2024.01 Leeum_Space/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
+    </div>
+
+    <div class="feed-row" data-cat="spaces">
+      <div class="feed-meta-l"><span class="feed-num">17</span><span class="feed-name">Kim Changyeul</span></div>
+      <div class="feed-img" onclick="showProject('kim-changyeul')"><img src="2023.10 Kim Changyeul_Space/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-r"><span class="feed-cat">Spaces · 2023</span></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 hamyunguu</p>
+    <p>Seoul, Korea</p>
+  </footer>
+</div>
+
+
+<!-- ══════════════ WORKS ══════════════ -->
+<div class="page" id="page-works">
+  <div class="strip-container" id="strip-container"></div>
+  <div class="works-detail" id="works-detail"></div>
+  <footer>
+    <p>© 2026 hamyunguu</p>
+    <p>Seoul, Korea</p>
+  </footer>
+</div>
+
+<!-- ══════════════ PROJECT DETAIL ══════════════ -->
+<div class="page" id="page-project">
+
+  <div class="breadcrumb">
+    <button onclick="showPage('works')">Works</button>
+    <span>/</span>
+    <span id="proj-breadcrumb">—</span>
+  </div>
+
+  <div class="proj-header">
+    <div>
+      <p class="proj-cat-label" id="proj-cat">—</p>
+      <h1 class="proj-name" id="proj-name">—</h1>
+    </div>
+    <div class="proj-credit" id="proj-credit"></div>
+  </div>
+
+  <div class="gallery" id="gallery-content"></div>
+
+  <div class="proj-nav-bar">
+    <button class="pnav-back" onclick="showPage('works')">← All works</button>
+    <div class="pnav-next" id="proj-next"></div>
+  </div>
+
+  <footer>
+    <p>© 2026 hamyunguu</p>
+    <p>Seoul, Korea</p>
+  </footer>
+</div>
+
+
+<!-- ══════════════ ABOUT OVERLAY ══════════════ -->
+<div class="about-overlay" id="about-overlay" onclick="closeAbout()">
+
+  <div class="about-wrap" onclick="event.stopPropagation()">
+
+    <div class="about-content">
+
+      <p class="about-name">함윤규</p>
+      <p class="about-role">Photographer / Videographer</p>
+
+      <p class="about-bio">
+        공간과 사물, 그리고<br>그 뒷편의 남겨진 이야기를 담아냅니다.
+      </p>
+
+      <p class="about-bio-sub">
+        Capturing spaces, objects, and the stories left behind them.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════ CONTACT OVERLAY ══════════════ -->
+<div class="about-overlay" id="contact-overlay" onclick="closeContact()">
+
+  <div class="about-wrap" onclick="event.stopPropagation()">
+    <div class="about-content">
+
+      <p class="about-name">Contact</p>
+
+      <a class="contact-line" href="mailto:hamyunguu@gmail.com">hamyunguu@gmail.com</a>
+      <a class="contact-line" href="https://instagram.com/hamyunguu" target="_blank">@hamyunguu</a>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════ PAGE LOADER ══════════════ -->
+<div id="page-loader">
+  <canvas id="loader-canvas" width="22" height="22"></canvas>
+</div>
+
+<div id="lightbox" onclick="closeLightbox(); event.stopPropagation();">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ══════════════ SCRIPT ══════════════ -->
+<script>
+
+const projects = {
+  'kim-insig': {
+    name: 'Kim Insig',
+    cat: 'Objects · 2026',
+    credit: 'Feb 2026',
+    folder: '2026.02 Kim Insig_Objects',
+    next: { id: 'acc-objects', name: 'ACC' },
+
+    layout: [
+      { type: 'full', file: 'DSC06228.jpg' },
+      { type: '2col', files: ['DSC06232.jpg', 'DSC06239.jpg'] },
+      { type: 'full', file: 'DSC06254.jpg' },
+      { type: '2col', files: ['DSC06256.jpg', 'DSC06260.jpg'] },
+      { type: 'full', file: 'DSC06274.jpg' },
+    ]
+  },
+  'acc-objects': {
+    name: 'ACC',
+    cat: 'Objects · 2025',
+    credit: 'Oct 2025',
+    folder: '2025.10 ACC_Objects',
+    next: { id: 'twl', name: 'TWL' },
+    layout: [
+      { type: '2col', files: ['DSC00121.jpg', 'DSC00122.jpg'] },
+      { type: 'full', file: 'DSC00186.jpg' },
+      { type: '2col', files: ['DSC00218.jpg', 'DSC00228.jpg'] },
+      { type: 'full', file: 'DSC00239.jpg' },
+      { type: '2col', files: ['DSC00242.jpg', 'DSC00245.jpg'] },
+    ]
+  },
+  'twl': {
+    name: 'TWL',
+    cat: 'Objects · 2025',
+    credit: 'Sept 2025',
+    folder: '2025.09 TWL_Objects',
+    next: { id: 'old-barber-place', name: 'Old Barber Place' },
+    layout: [
+      { type: 'full', file: 'DSC02310.jpg' },
+      { type: 'full', file: 'DSC02315.jpg' },
+      { type: 'full', file: 'DSC02317-2.jpg' },
+      { type: 'full', file: 'DSC02318.jpg' },
+      { type: 'full', file: 'ㅁㄴㅇㅁㄴㅇ.jpg' },
+    ]
+  },
+  'old-barber-place': {
+    name: 'Old Barber Place',
+    cat: 'Spaces · 2025',
+    credit: 'Sept 2025',
+    folder: '2025.09 OldBarberPlace_Spaces',
+    next: { id: 'ddp', name: 'DDP' },
+    layout: [
+      { type: 'full', file: 'DSC02826.jpg' },
+      { type: '2col', files: ['DSC02880.jpg', 'DSC02887.jpg'] },
+      { type: 'full', file: 'DSC02893.jpg' },
+      { type: '2col', files: ['DSC02903.jpg', 'DSC02911.jpg'] },
+      { type: 'full', file: 'DSC02914.jpg' },
+      { type: '2col', files: ['DSC02942.jpg', 'DSC02958.jpg'] },
+    ]
+  },
+  'ddp': {
+    name: 'DDP',
+    cat: 'Sketches · 2025',
+    credit: 'Sept 2025',
+    folder: '2025.09 DDP_ Works',
+    next: { id: 'heomoody', name: 'Heomoody' },
+    layout: [
+      { type: 'full', file: 'DSC02359.jpg' },
+      { type: '2col', files: ['DSC02376.jpg', 'DSC02379.jpg'] },
+      { type: 'full', file: 'DSC02391.jpg' },
+      { type: 'full', file: 'DSC02428.jpg' },
+    ]
+  },
+  'heomoody': {
+    name: 'Heomoody',
+    cat: 'Objects · 2025',
+    credit: 'Sept 2025',
+    folder: '2025.09 Heomoody_objects',
+    next: { id: 'mmca', name: 'MMCA' },
+    layout: [
+      { type: 'full', file: 'DSC02268.jpg' },
+      { type: '2col', files: ['DSC02273.jpg', 'DSC02304.jpg'] },
+    ]
+  },
+  'mmca': {
+    name: 'MMCA',
+    cat: 'Sketches · 2025',
+    credit: 'Aug 2025',
+    folder: '2025.08 MMCA_Works',
+    next: { id: 'kim-hanyoung', name: 'Kim Hanyoung' },
+    layout: [
+      { type: 'full', file: '이젠 전시를 보면 작품이 아닌 다른 이야기를 보게 된다.정면이 아니라 바닥과 …-2.jpg' },
+      { type: '2col', files: ['이젠 전시를 보면 작품이 아닌 다른 이야기를 보게 된다.정면이 아니라 바닥과 …-3.jpg', '이젠 전시를 보면 작품이 아닌 다른 이야기를 보게 된다.정면이 아니라 바닥과 …-4.jpg'] },
+      { type: 'full', file: '이젠 전시를 보면 작품이 아닌 다른 이야기를 보게 된다.정면이 아니라 바닥과 …-7.jpg' },
+    ]
+  },
+  'kim-hanyoung': {
+    name: 'Kim Hanyoung',
+    cat: 'Sketches · 2025',
+    credit: 'Jul 2025',
+    folder: '2025.07 Kim Hanyoung_Works',
+    next: { id: 'peter-ivy', name: 'Peter Ivy' },
+    layout: [
+      { type: 'full', file: 'DSC09376.jpg' },
+      { type: '2col', files: ['DSC09418.jpg', 'DSC09467.jpg'] },
+      { type: 'full', file: 'DSC09476.jpg' },
+      { type: '2col', files: ['DSC09478.jpg', 'DSC09481.jpg'] },
+      { type: 'full', file: 'DSC09562.jpg' },
+      { type: 'full', file: 'DSC09585.jpg' },
+    ]
+  },
+  'peter-ivy': {
+    name: 'Peter Ivy',
+    cat: 'Objects · 2025',
+    credit: 'Jun 2025',
+    folder: '2025.06 Peter Ivy_Objects',
+    next: { id: 'behind-the-doors', name: 'Behind the Doors' },
+    layout: [
+      { type: 'full', file: '[Peter Ivy 結合] @peterivy.flowlab 공예에 대한 큰 조예가 없지만 언제나 관심을 갖게하는 피터 아이비…-2.jpg' },
+      { type: '2col', files: ['[Peter Ivy 結合] @peterivy.flowlab 공예에 대한 큰 조예가 없지만 언제나 관심을 갖게하는 피터 아이비…-3.jpg', '[Peter Ivy 結合] @peterivy.flowlab 공예에 대한 큰 조예가 없지만 언제나 관심을 갖게하는 피터 아이비…-5.jpg'] },
+      { type: 'full', file: '[Peter Ivy 結合] @peterivy.flowlab 공예에 대한 큰 조예가 없지만 언제나 관심을 갖게하는 피터 아이비…-7.jpg' },
+    ]
+  },
+  'behind-the-doors': {
+    name: 'Behind the Doors',
+    cat: 'Sketches · 2025',
+    credit: 'Jun 2025',
+    folder: '2025.06 Behind the Doors_Works',
+    next: { id: 'workshop', name: 'Workshop' },
+    layout: [
+      { type: 'full', file: 'DSC00135.jpg' },
+      { type: '2col', files: ['DSC00150.jpg', 'DSC00246.jpg'] },
+      { type: 'full', file: 'DSC00260.jpg' },
+      { type: '2col', files: ['DSC00270.jpg', 'DSC00285.jpg'] },
+      { type: 'full', file: 'DSC00421-Edit.jpg' },
+      { type: 'full', file: 'DSC01324.jpg' },
+    ]
+  },
+  'workshop': {
+    name: 'Workshop',
+    cat: 'Sketches · 2025',
+    credit: 'May 2025',
+    folder: '2025.05 Workshop _Works',
+    next: { id: 'foh', name: 'Foh' },
+    layout: [
+      { type: 'full', file: 'DSC07851.jpg' },
+      { type: '2col', files: ['DSC07854.jpg', 'DSC07882.jpg'] },
+      { type: 'full', file: 'DSC07900.jpg' },
+    ]
+  },
+  'foh': {
+    name: 'Foh',
+    cat: 'Objects · 2025',
+    credit: 'Feb 2025',
+    folder: '2025.02 Foh_objects',
+    next: { id: 'songeun', name: 'Songeun' },
+    layout: [
+      { type: 'full', file: 'DSC06296.jpg' },
+      { type: '2col', files: ['DSC06302.jpg', 'DSC06305.jpg'] },
+      { type: 'full', file: 'DSC06308.jpg' },
+      { type: '2col', files: ['DSC06322.jpg', 'DSC06325.jpg'] },
+      { type: '2col', files: ['DSC06326.jpg', 'DSC06327.jpg'] },
+    ]
+  },
+  'songeun': {
+    name: 'Songeun',
+    cat: 'Spaces · 2024',
+    credit: 'Sept 2024',
+    folder: '2024.09 Songeun_Spaces',
+    next: { id: 'poul-kjaeholm', name: 'Poul Kjaeholm' },
+    layout: [
+      { type: 'full', file: 'DSC01019.jpg' },
+      { type: '2col', files: ['DSC01022.jpg', 'DSC01058.jpg'] },
+      { type: 'full', file: 'DSC01088.jpg' },
+      { type: '2col', files: ['DSC01103.jpg', 'DSC01142.jpg'] },
+    ]
+  },
+  'poul-kjaeholm': {
+    name: 'Poul Kjaeholm',
+    cat: 'Sketches · 2024',
+    credit: 'Aug 2024',
+    folder: '2024.08 Poul Kjaeholm_Works',
+    next: { id: 'younhyun-library', name: 'Younhyun Library' },
+    layout: [
+      { type: 'full', file: 'DSC00878.jpg' },
+      { type: '2col', files: ['DSC00920.jpg', 'DSC00928.jpg'] },
+      { type: 'full', file: 'DSC00937.jpg' },
+      { type: '2col', files: ['DSC00947.jpg', 'DSC00950.jpg'] },
+      { type: 'full', file: 'DSC00953.jpg' },
+      { type: 'full', file: 'DSC00961.jpg' },
+    ]
+  },
+  'younhyun-library': {
+    name: 'Younhyun Library',
+    cat: 'Spaces · 2024',
+    credit: 'Jul 2024',
+    folder: '2024.07 Younhyun Library_Space',
+    next: { id: 'leeum', name: 'Leeum' },
+    layout: [
+      { type: 'full', file: 'DSC00793.jpg' },
+      { type: '2col', files: ['DSC00822.jpg', 'DSC00828.jpg'] },
+      { type: 'full', file: 'DSC00831.jpg' },
+      { type: '2col', files: ['DSC00841-Enhanced-NR.jpg', 'DSC00843-Enhanced-NR.jpg'] },
+      { type: 'full', file: 'DSC00844.jpg' },
+      { type: 'full', file: 'DSC00848.jpg' },
+    ]
+  },
+  'leeum': {
+    name: 'Leeum',
+    cat: 'Spaces · 2024',
+    credit: 'Jan 2024',
+    folder: '2024.01 Leeum_Space',
+    next: { id: 'kim-changyeul', name: 'Kim Changyeul' },
+    layout: [
+      { type: 'full', file: 'DSC05039.jpg' },
+      { type: '2col', files: ['DSC05046.jpg', 'DSC05050.jpg'] },
+      { type: 'full', file: 'DSC05077.jpg' },
+      { type: 'full', file: 'DSC05117.jpg' },
+      { type: '2col', files: ['DSC07671-Enhanced-NR-3.jpg', 'DSC07672.jpg'] },
+      { type: 'full', file: 'DSC07686-Edit.jpg' },
+    ]
+  },
+  'kim-changyeul': {
+    name: 'Kim Changyeul',
+    cat: 'Spaces · 2023',
+    credit: 'Oct 2023',
+    folder: '2023.10 Kim Changyeul_Space',
+    next: { id: 'kim-insig', name: 'Kim Insig' },
+    layout: [
+      { type: 'full', file: 'DSC00363.jpg' },
+      { type: '2col', files: ['DSC00368.jpg', 'DSC00379.jpg'] },
+      { type: 'full', file: 'DSC00380.jpg' },
+      { type: 'full', file: 'DSC00386.jpg' },
+    ]
+  },
+};
+
+const heroImages = {
+  'kim-insig':        ['Hero 1.jpg', 'Hero 2.jpg'],
+  'acc-objects':      ['Hero 1.jpg'],
+  'twl':              ['Hero 1.jpg'],
+  'old-barber-place': ['Hero 1.jpg'],
+  'ddp':              ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+  'heomoody':         ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+  'mmca':             ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+  'kim-hanyoung':     ['Hero 1.jpg'],
+  'peter-ivy':        ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+  'behind-the-doors': ['Hero 1.jpg'],
+  'workshop':         ['Hero 1.jpg', 'Hero 2.jpg'],
+  'foh':              ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+  'songeun':          ['Hero 1.jpg', 'Hero 2.jpg'],
+  'poul-kjaeholm':    ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+  'younhyun-library': ['Hero 1.jpg'],
+  'leeum':            ['Hero 1.jpg'],
+  'kim-changyeul':    ['Hero 1.jpg', 'Hero 2.jpg', 'Hero 3.jpg'],
+};
+
+function showPage(id) {
+  if (id === 'about') {
+    openAbout();
+    return;
+  }
+  // Close overlays if open
+  closeAbout();
+  closeContact();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+  const el = document.getElementById('page-' + id);
+  if (el) {
+    el.classList.add('visible');
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  }
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (id === 'works') {
+    document.getElementById('nav-works').classList.add('active');
+    buildWorksStrip(currentWorksCat);
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openContact() {
+  closeAbout();
+  const overlay = document.getElementById('contact-overlay');
+  overlay.classList.add('visible');
+  overlay.scrollTop = 0;
+  document.getElementById('nav-contact').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeContact() {
+  const overlay = document.getElementById('contact-overlay');
+  if (!overlay.classList.contains('visible')) return;
+  overlay.classList.remove('visible');
+  overlay.classList.add('hiding');
+  document.getElementById('nav-contact').classList.remove('active');
+  document.body.style.overflow = '';
+  overlay.addEventListener('animationend', function handler() {
+    overlay.classList.remove('hiding');
+  }, { once: true });
+}
+
+function openAbout() {
+  const overlay = document.getElementById('about-overlay');
+  overlay.classList.add('visible');
+  overlay.scrollTop = 0;
+  document.getElementById('nav-about').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAbout() {
+  const overlay = document.getElementById('about-overlay');
+  if (!overlay.classList.contains('visible')) return;
+  overlay.classList.remove('visible');
+  overlay.classList.add('hiding');
+  document.getElementById('nav-about').classList.remove('active');
+  document.body.style.overflow = '';
+  overlay.addEventListener('animationend', function handler() {
+    overlay.classList.remove('hiding');
+    overlay.removeEventListener('animationend', handler);
+  }, { once: true });
+}
+
+function runLoader(callback) {
+  const loader  = document.getElementById('page-loader');
+  const canvas  = document.getElementById('loader-canvas');
+  const ctx     = canvas.getContext('2d');
+  const S = 22;
+  canvas.width = S; canvas.height = S;
+
+  loader.style.opacity    = '1';
+  loader.style.transition = 'none';
+  loader.classList.add('active');
+
+  const fillDur = 660;
+  const t0 = performance.now();
+  function ease(t) { return t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
+
+  function drawSweep(now) {
+    const t = Math.min((now - t0) / fillDur, 1);
+    const a = -Math.PI/2 + ease(t) * Math.PI * 2;
+    ctx.clearRect(0, 0, S, S);
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, S, S);
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.moveTo(S/2, S/2);
+    ctx.arc(S/2, S/2, S * 1.5, -Math.PI/2, a);
+    ctx.closePath();
+    ctx.fill();
+
+    if (t < 1) {
+      requestAnimationFrame(drawSweep);
+    } else {
+      callback();
+      requestAnimationFrame(() => {
+        loader.style.transition = 'opacity 0.4s ease';
+        loader.style.opacity = '0';
+        setTimeout(() => {
+          loader.classList.remove('active');
+          loader.style.opacity    = '';
+          loader.style.transition = '';
+        }, 400);
+      });
+    }
+  }
+  requestAnimationFrame(drawSweep);
+}
+
+function showProject(id) {
+  const p = projects[id];
+  if (!p) return;
+
+  document.getElementById('proj-breadcrumb').textContent = p.name;
+  document.getElementById('proj-cat').textContent = p.cat;
+  document.getElementById('proj-name').textContent = p.name;
+  document.getElementById('proj-credit').innerHTML = p.credit.replace(/\n/g, '<br>');
+
+  const gallery = document.getElementById('gallery-content');
+  gallery.innerHTML = '';
+
+  const heroes = heroImages[id] || [];
+  if (heroes.length === 1) {
+    gallery.innerHTML += `<div class="g-full-wrap"><img src="${p.folder}/${heroes[0]}" class="g-img" loading="lazy" alt=""></div>`;
+  } else if (heroes.length === 2) {
+    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col"><img src="${p.folder}/${heroes[0]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${heroes[1]}" class="g-img" loading="lazy" alt=""></div></div></div>`;
+  } else if (heroes.length >= 3) {
+    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-3col-inner"><div class="g-col"><img src="${p.folder}/${heroes[0]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${heroes[1]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${heroes[2]}" class="g-img" loading="lazy" alt=""></div></div></div>`;
+  }
+
+  p.layout.forEach(item => {
+    if (item.type === 'full') {
+      gallery.innerHTML += `<div class="g-full-wrap"><img src="${p.folder}/${item.file}" class="g-img" loading="lazy" alt=""></div>`;
+    } else if (item.type === '2col') {
+      gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col"><img src="${p.folder}/${item.files[0]}" class="g-img" loading="lazy" alt=""></div><div class="g-col"><img src="${p.folder}/${item.files[1]}" class="g-img" loading="lazy" alt=""></div></div></div>`;
+    }
+  });
+
+  const nextEl = document.getElementById('proj-next');
+  if (p.next) {
+    nextEl.innerHTML = p.next.name + ' &rarr;';
+    nextEl.onclick = () => showProject(p.next.id);
+  } else {
+    nextEl.innerHTML = '';
+  }
+
+  showPage('project');
+}
+
+const projectOrder = [
+  'kim-insig','acc-objects','twl','old-barber-place','ddp','heomoody',
+  'mmca','kim-hanyoung','peter-ivy','behind-the-doors','workshop','foh',
+  'songeun','poul-kjaeholm','younhyun-library','leeum','kim-changyeul'
+];
+const projectCats = {
+  'kim-insig':'objects','acc-objects':'objects','twl':'objects',
+  'old-barber-place':'spaces','ddp':'works','heomoody':'objects',
+  'mmca':'works','kim-hanyoung':'works','peter-ivy':'objects',
+  'behind-the-doors':'works','workshop':'works','foh':'objects',
+  'songeun':'spaces','poul-kjaeholm':'works','younhyun-library':'spaces',
+  'leeum':'spaces','kim-changyeul':'spaces'
+};
+
+let currentWorksCat = 'all';
+let expandedCardId = null;
+let stripSavedScroll = 0;
+
+function showWorksCategory(cat) {
+  currentWorksCat = cat;
+  runLoader(() => showPage('works'));
+}
+
+function buildWorksStrip(cat) {
+  expandedCardId = null;
+  const container = document.getElementById('strip-container');
+  const detail = document.getElementById('works-detail');
+  container.innerHTML = '';
+  detail.style.display = 'none';
+  detail.innerHTML = '';
+
+  const ids = projectOrder.filter(id => cat === 'all' || projectCats[id] === cat);
+  if (!ids.length) return;
+
+  let isDrag = false, dragStartX = 0, dragStartScroll = 0, dragged = false;
+
+  function makeCard(id) {
+    const p = projects[id];
+    const heroes = heroImages[id] || [];
+    const src = heroes.length ? `${p.folder}/${heroes[0]}` : '';
+    const card = document.createElement('div');
+    card.className = 'strip-card';
+    card.dataset.id = id;
+    card.innerHTML = `<div class="strip-thumb">${src ? `<img src="${src}" alt="" loading="lazy">` : ''}</div><p class="strip-card-name">${p.name}</p>`;
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (dragged) return;
+      toggleCardDetail(id, card);
+    });
+    return card;
+  }
+
+  ids.forEach(id => container.appendChild(makeCard(id)));
+
+  // sentinel marks end of original set — offsetLeft updates live as images load
+  const sentinel = document.createElement('div');
+  sentinel.style.cssText = 'flex:0 0 0;width:0;height:1px;';
+  container.appendChild(sentinel);
+
+  // two clones so short categories always fill the viewport
+  ids.forEach(id => container.appendChild(makeCard(id)));
+  ids.forEach(id => container.appendChild(makeCard(id)));
+
+  container.addEventListener('scroll', () => {
+    if (expandedCardId) return;
+    const origW = sentinel.offsetLeft;
+    if (origW <= 0) return;
+    if (container.scrollLeft >= origW * 2) container.scrollLeft -= origW;
+    if (container.scrollLeft < origW)      container.scrollLeft += origW;
+  }, { passive: true });
+
+  // start in the middle clone so left-scroll also works
+  requestAnimationFrame(() => {
+    const origW = sentinel.offsetLeft;
+    if (origW > 0) container.scrollLeft = origW;
+  });
+
+  container.addEventListener('mousedown', e => {
+    isDrag = true; dragged = false;
+    dragStartX = e.pageX;
+    dragStartScroll = container.scrollLeft;
+    e.preventDefault();
+  });
+  window.addEventListener('mouseup', () => { isDrag = false; });
+  container.addEventListener('mousemove', e => {
+    if (!isDrag) return;
+    if (Math.abs(e.pageX - dragStartX) > 4) dragged = true;
+    container.scrollLeft = dragStartScroll - (e.pageX - dragStartX);
+  });
+}
+
+function smoothStripScroll(container, target, duration) {
+  const start = container.scrollLeft;
+  const dist = target - start;
+  const t0 = performance.now();
+  function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+  function step(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    container.scrollLeft = start + dist * ease(p);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function toggleCardDetail(id, el) {
+  const container = document.getElementById('strip-container');
+  const detail = document.getElementById('works-detail');
+
+  if (expandedCardId === id) { closeCardDetail(); return; }
+
+  expandedCardId = id;
+  stripSavedScroll = container.scrollLeft;
+
+  container.querySelectorAll('.strip-card').forEach(c => {
+    c.classList.toggle('dimmed', c.dataset.id !== id);
+  });
+
+  smoothStripScroll(container, el.offsetLeft - container.offsetWidth / 2 + el.offsetWidth / 2, 820);
+
+  const p = projects[id];
+  const heroes = heroImages[id] || [];
+  let html = '<div class="works-detail-grid">';
+
+  const li = (src) => `<img src="${src}" loading="lazy" alt="" onclick="openLightbox('${src.replace(/'/g,"\\'")}')">`;
+  if (heroes.length === 1) {
+    html += `<div class="wd-full">${li(`${p.folder}/${heroes[0]}`)}</div>`;
+  } else if (heroes.length === 2) {
+    html += `<div class="wd-multi"><div class="wd-2col"><div class="wd-col">${li(`${p.folder}/${heroes[0]}`)}</div><div class="wd-col">${li(`${p.folder}/${heroes[1]}`)}</div></div></div>`;
+  } else if (heroes.length >= 3) {
+    html += `<div class="wd-multi"><div class="wd-3col"><div class="wd-col">${li(`${p.folder}/${heroes[0]}`)}</div><div class="wd-col">${li(`${p.folder}/${heroes[1]}`)}</div><div class="wd-col">${li(`${p.folder}/${heroes[2]}`)}</div></div></div>`;
+  }
+
+  p.layout.forEach(item => {
+    if (item.type === 'full') {
+      html += `<div class="wd-full${item.crop ? ' wd-crop' : ''}">${li(`${p.folder}/${item.file}`)}</div>`;
+    } else if (item.type === '2col') {
+      html += `<div class="wd-multi"><div class="wd-2col"><div class="wd-col">${li(`${p.folder}/${item.files[0]}`)}</div><div class="wd-col">${li(`${p.folder}/${item.files[1]}`)}</div></div></div>`;
+    }
+  });
+
+  html += '</div>';
+  detail.innerHTML = html;
+  detail.style.display = 'block';
+
+  setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+}
+
+function closeCardDetail() {
+  expandedCardId = null;
+  const container = document.getElementById('strip-container');
+  const detail = document.getElementById('works-detail');
+  container.querySelectorAll('.strip-card').forEach(c => c.classList.remove('dimmed'));
+  detail.style.display = 'none';
+  detail.innerHTML = '';
+  container.scrollLeft = stripSavedScroll;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+let _lbJustClosed = false;
+let _lbScrollY = 0;
+function openLightbox(src) {
+  _lbScrollY = window.scrollY;
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('active');
+}
+function closeLightbox() {
+  _lbJustClosed = true;
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('active');
+  document.getElementById('lightbox-img').src = '';
+  window.scrollTo({ top: _lbScrollY, behavior: 'instant' });
+  setTimeout(() => { _lbJustClosed = false; }, 100);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ─── SLIDER DRAG + AUTO-SLIDE ───
+;(function() {
+  const slider = document.getElementById('recent-slider');
+  if (!slider) return;
+  let isDragging = false, startX, scrollLeft, moved = false;
+
+  slider.addEventListener('mousedown', e => {
+    isDragging = true; moved = false;
+    startX = e.pageX;
+    scrollLeft = slider.scrollLeft;
+    slider.classList.add('grabbing');
+    e.preventDefault();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    slider.classList.remove('grabbing');
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    moved = true;
+    slider.scrollLeft = scrollLeft - (e.pageX - startX);
+  });
+
+  slider.addEventListener('click', e => {
+    if (moved) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  // auto-slide
+  let paused = false;
+  const tick = () => {
+    if (paused) return;
+    const card = slider.querySelector('.recent-card');
+    if (!card) return;
+    const step = card.offsetWidth + 12;
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    if (slider.scrollLeft >= maxScroll - 2) {
+      slider.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      slider.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  };
+  let timer = setInterval(tick, 3500);
+  slider.addEventListener('mouseenter', () => { paused = true; });
+  slider.addEventListener('mouseleave', () => { paused = false; });
+})();
+
+// ─── WORKS PAGE: click anywhere (not on card) closes detail ───
+document.getElementById('page-works').addEventListener('click', (e) => {
+  if (_lbJustClosed) return;
+  if (document.getElementById('works-detail').contains(e.target)) return;
+  if (expandedCardId) closeCardDetail();
+});
+
+</script>
+</body>
+</html>
