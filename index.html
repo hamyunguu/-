@@ -63,7 +63,7 @@ nav {
 }
 
 .logo {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 200;
   letter-spacing: 0.06em;
   color: var(--text);
@@ -75,7 +75,7 @@ nav {
 .nav-links { display: flex; gap: 28px; align-items: center; }
 
 .nav-link {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 200;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -126,7 +126,7 @@ nav {
 }
 
 .nav-dropdown-item {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 200;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -192,7 +192,7 @@ nav {
 .home-recent { padding: 48px var(--pad) 0; }
 
 .section-label {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -236,14 +236,14 @@ nav {
 .recent-card:hover .recent-thumb img { opacity: 0.82; }
 
 .recent-title {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 200;
   color: var(--text);
   margin-bottom: 3px;
   letter-spacing: 0.03em;
 }
 .recent-meta {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   color: var(--muted);
   letter-spacing: 0.08em;
@@ -258,7 +258,7 @@ nav {
   justify-content: space-between;
 }
 .works-heading {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -266,7 +266,7 @@ nav {
 }
 .filter-row { display: flex; gap: 20px; }
 .filter-btn {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -298,7 +298,7 @@ nav {
   padding-left: 72px;
 }
 .feed-num {
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 200;
   color: var(--muted);
 }
@@ -307,7 +307,7 @@ nav {
   flex-direction: column;
 }
 .feed-name {
-  font-size: 7.5px;
+  font-size: 14px;
   font-weight: 200;
   color: var(--muted);
   letter-spacing: 0.06em;
@@ -321,7 +321,7 @@ nav {
   letter-spacing: 0.01em;
 }
 .feed-cat {
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 200;
   color: var(--muted);
   letter-spacing: 0.08em;
@@ -345,13 +345,16 @@ nav {
 
 /* ── PROJECT DETAIL ── */
 .breadcrumb {
-  padding: 22px var(--pad) 0;
+  position: absolute;
+  top: 0;
+  left: var(--pad);
   display: flex;
   gap: 8px;
   align-items: center;
+  justify-content: flex-start;
 }
 .breadcrumb span, .breadcrumb button {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -363,14 +366,26 @@ nav {
 }
 .breadcrumb button:hover { color: var(--text); }
 
-.proj-header {
-  padding: 28px var(--pad) 24px;
+.proj-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 560px) 1fr;
+  padding-top: 22px;
+}
+.proj-meta-l {
+  grid-column: 1;
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-end;
+  padding: 0 24px 0 var(--pad);
+}
+.proj-meta-r {
+  grid-column: 3;
+  align-self: start;
+  padding: 0 var(--pad) 0 72px;
 }
 .proj-cat-label {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -384,7 +399,7 @@ nav {
   line-height: 1.2;
 }
 .proj-credit {
-  font-size: 7.5px;
+  font-size: 12px;
   font-weight: 200;
   color: var(--muted);
   text-align: right;
@@ -394,12 +409,12 @@ nav {
 
 /* GALLERY */
 .gallery {
-  display: grid;
-  grid-template-columns: 1fr minmax(0, 560px) 1fr;
-  row-gap: 3px;
-  padding: 3px 0 0;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
-.g-full-wrap, .g-multi-wrap { grid-column: 2; }
+.g-full-wrap, .g-multi-wrap { width: 100%; }
 .g-img {
   display: block;
   width: 100%; height: auto;
@@ -423,7 +438,7 @@ nav {
   align-items: center;
 }
 .pnav-back {
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 200;
   color: var(--muted);
   background: none; border: none;
@@ -435,7 +450,7 @@ nav {
 }
 .pnav-back:hover { color: var(--text); }
 .pnav-next {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 200;
   color: var(--muted);
   cursor: pointer;
@@ -489,7 +504,7 @@ nav {
   letter-spacing: 0.02em;
 }
 .about-role {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 200;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -739,8 +754,11 @@ footer p {
   .g-2col-inner { grid-template-columns: 1fr 1fr; }
   .g-3col-inner { grid-template-columns: 1fr 1fr; }
 
-  .proj-header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 20px var(--pad); }
+  .proj-layout { grid-template-columns: 1fr; padding: 20px var(--pad) 0; }
+  .proj-meta-l { grid-column: 1; align-items: flex-start; padding: 0 0 16px; }
+  .proj-meta-r { grid-column: 1; padding: 16px 0 0; }
   .proj-credit { text-align: left; }
+  .gallery { grid-column: 1; }
   .proj-name { font-size: 18px; }
   .proj-nav-bar { padding: 20px var(--pad); }
 
@@ -908,21 +926,21 @@ footer p {
 <!-- ══════════════ PROJECT DETAIL ══════════════ -->
 <div class="page" id="page-project">
 
-  <div class="breadcrumb">
-    <button onclick="showPage('works')">Works</button>
-    <span>/</span>
-    <span id="proj-breadcrumb">—</span>
-  </div>
-
-  <div class="proj-header">
-    <div>
+  <div class="proj-layout">
+    <div class="proj-meta-l">
+      <div class="breadcrumb">
+        <button onclick="showPage('works')">Works</button>
+        <span>/</span>
+        <span id="proj-breadcrumb">—</span>
+      </div>
       <p class="proj-cat-label" id="proj-cat">—</p>
       <h1 class="proj-name" id="proj-name">—</h1>
     </div>
-    <div class="proj-credit" id="proj-credit"></div>
+    <div class="gallery" id="gallery-content"></div>
+    <div class="proj-meta-r">
+      <div class="proj-credit" id="proj-credit"></div>
+    </div>
   </div>
-
-  <div class="gallery" id="gallery-content"></div>
 
   <div class="proj-nav-bar">
     <button class="pnav-back" onclick="showPage('works')">← All works</button>
@@ -1297,93 +1315,72 @@ function closeAbout() {
 }
 
 function runLoader(callback) {
-  const loader  = document.getElementById('page-loader');
-  const canvas  = document.getElementById('loader-canvas');
-  const ctx     = canvas.getContext('2d');
-  const S = 22;
-  canvas.width = S; canvas.height = S;
-
-  loader.style.opacity    = '1';
+  const loader = document.getElementById('page-loader');
+  loader.style.opacity   = '0';
   loader.style.transition = 'none';
   loader.classList.add('active');
-
-  const fillDur = 660;
-  const t0 = performance.now();
-  function ease(t) { return t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
-
-  function drawSweep(now) {
-    const t = Math.min((now - t0) / fillDur, 1);
-    const a = -Math.PI/2 + ease(t) * Math.PI * 2;
-    ctx.clearRect(0, 0, S, S);
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, S, S);
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.moveTo(S/2, S/2);
-    ctx.arc(S/2, S/2, S * 1.5, -Math.PI/2, a);
-    ctx.closePath();
-    ctx.fill();
-
-    if (t < 1) {
-      requestAnimationFrame(drawSweep);
-    } else {
-      callback();
-      requestAnimationFrame(() => {
-        loader.style.transition = 'opacity 0.4s ease';
-        loader.style.opacity = '0';
-        setTimeout(() => {
-          loader.classList.remove('active');
-          loader.style.opacity    = '';
-          loader.style.transition = '';
-        }, 400);
-      });
-    }
-  }
-  requestAnimationFrame(drawSweep);
+  loader.offsetHeight; // reflow
+  loader.style.transition = 'opacity 0.35s ease';
+  loader.style.opacity   = '1';
+  setTimeout(() => {
+    callback();
+    requestAnimationFrame(() => {
+      loader.style.transition = 'opacity 0.5s ease';
+      loader.style.opacity   = '0';
+      setTimeout(() => {
+        loader.classList.remove('active');
+        loader.style.opacity   = '';
+        loader.style.transition = '';
+      }, 500);
+    });
+  }, 370);
 }
 
 function showProject(id) {
   const p = projects[id];
   if (!p) return;
 
-  document.getElementById('proj-breadcrumb').textContent = p.name;
-  document.getElementById('proj-cat').textContent = p.cat;
-  document.getElementById('proj-name').textContent = p.name;
-  document.getElementById('proj-credit').innerHTML = p.credit.replace(/\n/g, '<br>');
+  runLoader(() => {
+    document.getElementById('proj-breadcrumb').textContent = p.name;
+    document.getElementById('proj-cat').textContent = p.cat;
+    document.getElementById('proj-name').textContent = p.name;
+    document.getElementById('proj-credit').innerHTML = p.credit.replace(/\n/g, '<br>');
 
-  const gallery = document.getElementById('gallery-content');
-  gallery.innerHTML = '';
+    const gallery = document.getElementById('gallery-content');
+    gallery.innerHTML = '';
 
-  const gi = (src) => {
-    const s = src.replace(/'/g, "\\'");
-    return `<img src="${src}" class="g-img" loading="lazy" alt="" onclick="openLightbox('${s}')">`;
-  };
+    const gi = (src) => {
+      const s = src.replace(/'/g, "\\'");
+      return `<img src="${src}" class="g-img" loading="lazy" alt="" onclick="openLightbox('${s}')">`;
+    };
 
-  const heroes = heroImages[id] || [];
-  if (heroes.length === 1) {
-    gallery.innerHTML += `<div class="g-full-wrap">${gi(`${p.folder}/${heroes[0]}`)}</div>`;
-  } else if (heroes.length === 2) {
-    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col">${gi(`${p.folder}/${heroes[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[1]}`)}</div></div></div>`;
-  } else if (heroes.length >= 3) {
-    gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-3col-inner"><div class="g-col">${gi(`${p.folder}/${heroes[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[1]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[2]}`)}</div></div></div>`;
-  }
-
-  p.layout.forEach(item => {
-    if (item.type === 'full') {
-      gallery.innerHTML += `<div class="g-full-wrap">${gi(`${p.folder}/${item.file}`)}</div>`;
-    } else if (item.type === '2col') {
-      gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col">${gi(`${p.folder}/${item.files[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${item.files[1]}`)}</div></div></div>`;
+    const heroes = heroImages[id] || [];
+    if (heroes.length === 1) {
+      gallery.innerHTML += `<div class="g-full-wrap">${gi(`${p.folder}/${heroes[0]}`)}</div>`;
+    } else if (heroes.length === 2) {
+      gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col">${gi(`${p.folder}/${heroes[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[1]}`)}</div></div></div>`;
+    } else if (heroes.length >= 3) {
+      gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-3col-inner"><div class="g-col">${gi(`${p.folder}/${heroes[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[1]}`)}</div><div class="g-col">${gi(`${p.folder}/${heroes[2]}`)}</div></div></div>`;
     }
+
+    p.layout.forEach(item => {
+      if (item.type === 'full') {
+        gallery.innerHTML += `<div class="g-full-wrap">${gi(`${p.folder}/${item.file}`)}</div>`;
+      } else if (item.type === '2col') {
+        gallery.innerHTML += `<div class="g-multi-wrap"><div class="g-2col-inner"><div class="g-col">${gi(`${p.folder}/${item.files[0]}`)}</div><div class="g-col">${gi(`${p.folder}/${item.files[1]}`)}</div></div></div>`;
+      }
+    });
+
+    const nextEl = document.getElementById('proj-next');
+    if (p.next) {
+      nextEl.innerHTML = p.next.name + ' &rarr;';
+      nextEl.onclick = () => showProject(p.next.id);
+    } else {
+      nextEl.innerHTML = '';
+    }
+
+    showPage('project');
   });
-
-  const nextEl = document.getElementById('proj-next');
-  if (p.next) {
-    nextEl.innerHTML = p.next.name + ' &rarr;';
-    nextEl.onclick = () => showProject(p.next.id);
-  } else {
-    nextEl.innerHTML = '';
-  }
-
-  showPage('project');
 }
 
 const projectOrder = [
@@ -1658,6 +1655,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   slider.addEventListener('mouseenter', () => { paused = true; });
   slider.addEventListener('mouseleave', () => { paused = false; });
 })();
+
+// ─── PROJECT PAGE: click outside image/buttons → back to home ───
+document.getElementById('page-project').addEventListener('click', (e) => {
+  if (_lbJustClosed) return;
+  if (e.target.closest('img, button, a, .pnav-next, .proj-nav-bar, .breadcrumb')) return;
+  runLoader(() => showPage('home'));
+});
 
 // ─── WORKS PAGE: click anywhere (not on card) closes detail ───
 document.getElementById('page-works').addEventListener('click', (e) => {
