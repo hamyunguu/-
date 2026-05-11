@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh auth *)",
+      "Bash(cp \"/Users/hamyunguu/Desktop/hamgyunguu/포폴 웹/index.html\" \"/Users/hamyunguu/Documents/GitHub/hamyunguu.github.io/index.html\" && echo \"done\")"
+    ]
+  }
+}

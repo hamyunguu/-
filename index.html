@@ -415,10 +415,10 @@ nav {
 
 /* ── ABOUT OVERLAY ── */
 .about-overlay {
-  display: none;
+  display: flex;
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 200;
@@ -426,15 +426,13 @@ nav {
   align-items: center;
   justify-content: center;
   padding: var(--nav-h) var(--pad) 48px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
 }
 .about-overlay.visible {
-  display: flex;
-  animation: fadeIn 0.28s ease both;
-}
-.about-overlay.hiding {
-  display: flex;
-  animation: fadeOut 0.22s ease both;
-  pointer-events: none;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .about-wrap {
@@ -1209,34 +1207,13 @@ function openContact() {
   overlay.classList.add('visible');
   overlay.scrollTop = 0;
   document.getElementById('nav-contact').classList.add('active');
-  lockScroll();
 }
 
 function closeContact() {
   const overlay = document.getElementById('contact-overlay');
   if (!overlay.classList.contains('visible')) return;
   overlay.classList.remove('visible');
-  overlay.classList.add('hiding');
   document.getElementById('nav-contact').classList.remove('active');
-  unlockScroll();
-  overlay.addEventListener('animationend', function handler() {
-    overlay.classList.remove('hiding');
-  }, { once: true });
-}
-
-function lockScroll() {
-  const y = window.scrollY;
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${y}px`;
-  document.body.style.width = '100%';
-  document.body.dataset.scrollY = y;
-}
-function unlockScroll() {
-  const y = parseInt(document.body.dataset.scrollY || '0');
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  window.scrollTo(0, y);
 }
 
 function openAbout() {
@@ -1244,20 +1221,13 @@ function openAbout() {
   overlay.classList.add('visible');
   overlay.scrollTop = 0;
   document.getElementById('nav-about').classList.add('active');
-  lockScroll();
 }
 
 function closeAbout() {
   const overlay = document.getElementById('about-overlay');
   if (!overlay.classList.contains('visible')) return;
   overlay.classList.remove('visible');
-  overlay.classList.add('hiding');
   document.getElementById('nav-about').classList.remove('active');
-  unlockScroll();
-  overlay.addEventListener('animationend', function handler() {
-    overlay.classList.remove('hiding');
-    overlay.removeEventListener('animationend', handler);
-  }, { once: true });
 }
 
 function runLoader(callback) {
