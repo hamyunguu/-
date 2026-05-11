@@ -710,10 +710,10 @@ footer p {
   #nav-works { cursor: pointer; }
 
   /* feed */
-  .feed { grid-template-columns: 1fr; }
-  .feed-row { display: flex; flex-direction: column; }
+  .feed { display: block; }
+  .feed-row { display: block; }
   .feed-meta-l, .feed-meta-r { display: none !important; }
-  .feed-center { width: 100%; }
+  .feed-center { display: flex; flex-direction: column; width: 100%; }
   .feed-caption { font-size: 10px; padding: 8px 0 24px; }
 
   /* works strip */
@@ -1669,6 +1669,7 @@ if ('ontouchstart' in window) {
 
 // ─── CUSTOM CURSOR ───
 ;(function() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
   const cur = document.getElementById('custom-cursor');
   const HOVER_SELECTORS = 'a, button, .feed-img, .feed-center, .strip-card, .works-card, .wd-full img, .wd-col img, .g-img, #lightbox, .about-overlay, #contact-overlay, .pnav-next, .pnav-back, [onclick]';
 
