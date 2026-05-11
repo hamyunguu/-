@@ -41,10 +41,11 @@ body {
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, opacity 0.15s ease;
   will-change: left, top;
-  mix-blend-mode: normal;
+  opacity: 0;
 }
+#custom-cursor.visible { opacity: 1; }
 #custom-cursor.is-hover {
   background: #111;
   transform: translate(-50%, -50%) scale(0.9);
@@ -301,10 +302,15 @@ nav {
   font-weight: 200;
   color: var(--muted);
 }
-.feed-name {
-  font-size: 13px;
+.feed-center {
+  display: flex;
+  flex-direction: column;
+}
+.feed-caption {
+  font-size: 11px;
   font-weight: 200;
-  color: var(--muted);
+  color: #555;
+  padding-top: 10px;
   letter-spacing: 0.01em;
 }
 .feed-cat {
@@ -567,11 +573,11 @@ nav {
   pointer-events: none;
 }
 .strip-card-name {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 200;
-  color: var(--muted);
-  padding: 8px var(--pad) 0;
-  letter-spacing: 0.02em;
+  color: #555;
+  padding: 8px 0 0;
+  letter-spacing: 0.01em;
 }
 .strip-card.dimmed {
   opacity: 0.12;
@@ -583,7 +589,13 @@ nav {
 .works-detail {
   display: none;
   padding-top: 48px;
-  animation: fadeIn 0.3s ease both;
+}
+.works-detail.animating {
+  animation: detailSlideIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes detailSlideIn {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .works-detail-grid {
   display: grid;
@@ -751,104 +763,104 @@ footer p {
   <div class="feed">
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">01</span><span class="feed-name">Kim Insig</span></div>
-      <div class="feed-img" onclick="showProject('kim-insig')"><img src="2026.02 Kim Insig_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">01</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('kim-insig')"><img src="2026.02 Kim Insig_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Kim Insig</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2026</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">02</span><span class="feed-name">ACC</span></div>
-      <div class="feed-img" onclick="showProject('acc-objects')"><img src="2025.10 ACC_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">02</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('acc-objects')"><img src="2025.10 ACC_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">ACC</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">03</span><span class="feed-name">TWL</span></div>
-      <div class="feed-img" onclick="showProject('twl')"><img src="2025.09 TWL_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">03</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('twl')"><img src="2025.09 TWL_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">TWL</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">04</span><span class="feed-name">Old Barber Place</span></div>
-      <div class="feed-img" onclick="showProject('old-barber-place')"><img src="2025.09 OldBarberPlace_Spaces/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">04</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('old-barber-place')"><img src="2025.09 OldBarberPlace_Spaces/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Old Barber Place</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">05</span><span class="feed-name">DDP</span></div>
-      <div class="feed-img" onclick="showProject('ddp')"><img src="2025.09 DDP_ Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">05</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('ddp')"><img src="2025.09 DDP_ Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">DDP</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">06</span><span class="feed-name">Heomoody</span></div>
-      <div class="feed-img" onclick="showProject('heomoody')"><img src="2025.09 Heomoody_objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">06</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('heomoody')"><img src="2025.09 Heomoody_objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Heomoody</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">07</span><span class="feed-name">MMCA</span></div>
-      <div class="feed-img" onclick="showProject('mmca')"><img src="2025.08 MMCA_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">07</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('mmca')"><img src="2025.08 MMCA_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">MMCA</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">08</span><span class="feed-name">Kim Hanyoung</span></div>
-      <div class="feed-img" onclick="showProject('kim-hanyoung')"><img src="2025.07 Kim Hanyoung_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">08</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('kim-hanyoung')"><img src="2025.07 Kim Hanyoung_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Kim Hanyoung</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">09</span><span class="feed-name">Peter Ivy</span></div>
-      <div class="feed-img" onclick="showProject('peter-ivy')"><img src="2025.06 Peter Ivy_Objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">09</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('peter-ivy')"><img src="2025.06 Peter Ivy_Objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Peter Ivy</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">10</span><span class="feed-name">Behind the Doors</span></div>
-      <div class="feed-img" onclick="showProject('behind-the-doors')"><img src="2025.06 Behind the Doors_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">10</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('behind-the-doors')"><img src="2025.06 Behind the Doors_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Behind the Doors</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">11</span><span class="feed-name">Workshop</span></div>
-      <div class="feed-img" onclick="showProject('workshop')"><img src="2025.05 Workshop _Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">11</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('workshop')"><img src="2025.05 Workshop _Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Workshop</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="objects">
-      <div class="feed-meta-l"><span class="feed-num">12</span><span class="feed-name">Foh</span></div>
-      <div class="feed-img" onclick="showProject('foh')"><img src="2025.02 Foh_objects/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">12</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('foh')"><img src="2025.02 Foh_objects/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Foh</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Objects · 2025</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">13</span><span class="feed-name">Songeun</span></div>
-      <div class="feed-img" onclick="showProject('songeun')"><img src="2024.09 Songeun_Spaces/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">13</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('songeun')"><img src="2024.09 Songeun_Spaces/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Songeun</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="works">
-      <div class="feed-meta-l"><span class="feed-num">14</span><span class="feed-name">Poul Kjaeholm</span></div>
-      <div class="feed-img" onclick="showProject('poul-kjaeholm')"><img src="2024.08 Poul Kjaeholm_Works/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">14</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('poul-kjaeholm')"><img src="2024.08 Poul Kjaeholm_Works/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Poul Kjaeholm</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Sketches · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">15</span><span class="feed-name">Younhyun Library</span></div>
-      <div class="feed-img" onclick="showProject('younhyun-library')"><img src="2024.07 Younhyun Library_Space/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">15</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('younhyun-library')"><img src="2024.07 Younhyun Library_Space/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Younhyun Library</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">16</span><span class="feed-name">Leeum</span></div>
-      <div class="feed-img" onclick="showProject('leeum')"><img src="2024.01 Leeum_Space/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">16</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('leeum')"><img src="2024.01 Leeum_Space/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Leeum</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2024</span></div>
     </div>
 
     <div class="feed-row" data-cat="spaces">
-      <div class="feed-meta-l"><span class="feed-num">17</span><span class="feed-name">Kim Changyeul</span></div>
-      <div class="feed-img" onclick="showProject('kim-changyeul')"><img src="2023.10 Kim Changyeul_Space/Hero 1.jpg" loading="lazy" alt=""></div>
+      <div class="feed-meta-l"><span class="feed-num">17</span></div>
+      <div class="feed-center"><div class="feed-img" onclick="showProject('kim-changyeul')"><img src="2023.10 Kim Changyeul_Space/Hero 1.jpg" loading="lazy" alt=""></div><p class="feed-caption">Kim Changyeul</p></div>
       <div class="feed-meta-r"><span class="feed-cat">Spaces · 2023</span></div>
     </div>
 
@@ -1494,9 +1506,16 @@ function toggleCardDetail(id, el) {
 
   html += '</div>';
   detail.innerHTML = html;
-  detail.style.display = 'block';
 
-  setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+  setTimeout(() => {
+    detail.style.display = 'block';
+    detail.classList.add('animating');
+    detail.addEventListener('animationend', () => detail.classList.remove('animating'), { once: true });
+    setTimeout(() => {
+      const targetY = detail.getBoundingClientRect().top + window.scrollY - 16;
+      smoothPageScroll(targetY, 900);
+    }, 80);
+  }, 840);
 }
 
 function closeCardDetail() {
@@ -1504,10 +1523,40 @@ function closeCardDetail() {
   const container = document.getElementById('strip-container');
   const detail = document.getElementById('works-detail');
   container.querySelectorAll('.strip-card').forEach(c => c.classList.remove('dimmed'));
-  detail.style.display = 'none';
-  detail.innerHTML = '';
-  container.scrollLeft = stripSavedScroll;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  detail.style.pointerEvents = 'none';
+  detail.style.transition = 'opacity 0.4s ease';
+  detail.style.opacity = '0';
+
+  const startY = window.scrollY;
+  const duration = 500;
+  const t0 = performance.now();
+  (function step(ts) {
+    const p = Math.min((ts - t0) / duration, 1);
+    const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+    window.scrollTo(0, startY * (1 - e));
+    if (p < 1) requestAnimationFrame(step);
+  })(performance.now());
+
+  setTimeout(() => {
+    detail.style.display = 'none';
+    detail.style.transition = '';
+    detail.style.pointerEvents = '';
+    detail.style.opacity = '';
+    detail.innerHTML = '';
+  }, 650);
+}
+
+function smoothPageScroll(targetY, duration) {
+  const start = window.scrollY;
+  const dist = targetY - start;
+  const t0 = performance.now();
+  function step(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+    window.scrollTo(0, start + dist * e);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 let _lbJustClosed = false;
 let _lbScrollY = 0;
@@ -1591,18 +1640,22 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 // ─── WORKS PAGE: click anywhere (not on card) closes detail ───
 document.getElementById('page-works').addEventListener('click', (e) => {
   if (_lbJustClosed) return;
-  if (document.getElementById('works-detail').contains(e.target)) return;
-  if (expandedCardId) closeCardDetail();
+  if (!expandedCardId) return;
+  const detail = document.getElementById('works-detail');
+  if (detail.contains(e.target) && e.target.tagName === 'IMG') return;
+  if (e.target.closest('.strip-card')) return;
+  closeCardDetail();
 });
 
 // ─── CUSTOM CURSOR ───
 ;(function() {
   const cur = document.getElementById('custom-cursor');
-  const HOVER_SELECTORS = 'a, button, .feed-img, .works-card, .wd-full img, .wd-col img, .g-img, #lightbox, .about-overlay, #contact-overlay, .pnav-next, .pnav-back, [onclick]';
+  const HOVER_SELECTORS = 'a, button, .feed-img, .feed-center, .strip-card, .works-card, .wd-full img, .wd-col img, .g-img, #lightbox, .about-overlay, #contact-overlay, .pnav-next, .pnav-back, [onclick]';
 
   document.addEventListener('mousemove', e => {
     cur.style.left = e.clientX + 'px';
     cur.style.top  = e.clientY + 'px';
+    cur.classList.add('visible');
   });
 
   document.addEventListener('mouseover', e => {
@@ -1612,7 +1665,13 @@ document.getElementById('page-works').addEventListener('click', (e) => {
     if (e.target.closest(HOVER_SELECTORS)) cur.classList.remove('is-hover');
   });
 
-  document.addEventListener('mouseleave', () => cur.classList.remove('is-hover'));
+  document.documentElement.addEventListener('mouseleave', () => {
+    cur.classList.remove('is-hover');
+    cur.classList.remove('visible');
+  });
+  document.documentElement.addEventListener('mouseenter', () => {
+    cur.classList.add('visible');
+  });
 })();
 
 </script>
