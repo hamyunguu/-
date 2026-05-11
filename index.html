@@ -366,6 +366,7 @@ nav {
 }
 .breadcrumb button:hover { color: var(--text); }
 
+
 .proj-layout {
   display: grid;
   grid-template-columns: 1fr minmax(0, 560px) 1fr;
@@ -382,6 +383,8 @@ nav {
 .proj-meta-r {
   grid-column: 3;
   align-self: start;
+  display: flex;
+  flex-direction: column;
   padding: 0 var(--pad) 0 72px;
 }
 .proj-cat-label {
@@ -399,11 +402,10 @@ nav {
   line-height: 1.2;
 }
 .proj-credit {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 200;
   color: var(--muted);
   text-align: right;
-  line-height: 2;
   letter-spacing: 0.04em;
 }
 
