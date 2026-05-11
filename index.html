@@ -1342,6 +1342,7 @@ function showProject(id) {
   const p = projects[id];
   if (!p) return;
 
+  _homeScrollY = window.scrollY;
   runLoader(() => {
     document.getElementById('proj-breadcrumb').textContent = p.name;
     document.getElementById('proj-cat').textContent = p.cat;
@@ -1581,6 +1582,7 @@ function smoothPageScroll(targetY, duration) {
 }
 let _lbJustClosed = false;
 let _lbScrollY = 0;
+let _homeScrollY = 0;
 function openLightbox(src) {
   _lbScrollY = window.scrollY;
   const lb = document.getElementById('lightbox');
@@ -1662,7 +1664,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 document.getElementById('page-project').addEventListener('click', (e) => {
   if (_lbJustClosed) return;
   if (e.target.closest('img, button, a, .pnav-next, .proj-nav-bar, .breadcrumb')) return;
-  runLoader(() => showPage('home'));
+  runLoader(() => {
+    showPage('home');
+    requestAnimationFrame(() => window.scrollTo({ top: _homeScrollY, behavior: 'instant' }));
+  });
 });
 
 // ─── WORKS PAGE: click anywhere (not on card) closes detail ───
