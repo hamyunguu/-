@@ -737,7 +737,11 @@ footer p {
   .feed-row { display: block; }
   .feed-meta-l, .feed-meta-r { display: none !important; }
   .feed-center { display: flex; flex-direction: column; width: 100%; }
-  .feed-caption { display: block; }
+  .feed-caption { display: block; padding: 8px 16px 0; }
+
+  /* nav dropdown: hover sticky 제거, open 클래스만 사용 */
+  .nav-item:hover .nav-dropdown { opacity: 0; pointer-events: none; }
+  .nav-item.open .nav-dropdown  { opacity: 1; pointer-events: auto; }
 
   /* works strip */
   .strip-thumb { height: 52vw; }
