@@ -280,23 +280,12 @@ nav {
 
 .feed {
   display: grid;
-  grid-template-columns: 1fr minmax(0, 560px) 1fr;
-  row-gap: 3px;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  padding: 0 15%;
 }
 
-.feed-meta-l {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  padding-right: 72px;
-  gap: 5px;
-}
-.feed-meta-r {
-  display: flex;
-  align-items: center;
-  padding-left: 72px;
-}
+.feed-meta-l, .feed-meta-r { display: none; }
 .feed-num {
   font-size: 14px;
   font-weight: 200;
@@ -730,10 +719,9 @@ footer p {
   *, *::before, *::after { cursor: auto !important; }
 
   /* nav */
-  #nav-works { cursor: pointer; }
 
   /* feed */
-  .feed { display: block; }
+  .feed { display: block; padding: 0; }
   .feed-row { display: block; }
   .feed-meta-l, .feed-meta-r { display: none !important; }
   .feed-center { display: flex; flex-direction: column; width: 100%; }
@@ -788,15 +776,6 @@ footer p {
 <nav>
   <button class="logo" onclick="showPage('home')">hamyunguu</button>
   <div class="nav-links">
-    <div class="nav-item">
-      <span class="nav-link" id="nav-works">Works</span>
-      <div class="nav-dropdown">
-        <button class="nav-dropdown-item" onclick="showWorksCategory('all')">All</button>
-        <button class="nav-dropdown-item" onclick="showWorksCategory('objects')">Objects</button>
-        <button class="nav-dropdown-item" onclick="showWorksCategory('spaces')">Spaces</button>
-        <button class="nav-dropdown-item" onclick="showWorksCategory('works')">Sketches</button>
-      </div>
-    </div>
     <button class="nav-link" id="nav-about" onclick="showPage('about')">About</button>
     <button class="nav-link" id="nav-contact" onclick="openContact()">Contact</button>
   </div>
@@ -920,14 +899,6 @@ footer p {
 
 
 <!-- ══════════════ WORKS ══════════════ -->
-<div class="page" id="page-works">
-  <div class="strip-container" id="strip-container"></div>
-  <div class="works-detail" id="works-detail"></div>
-  <footer>
-    <p>© 2026 hamyunguu</p>
-    <p>Seoul, Korea</p>
-  </footer>
-</div>
 
 <!-- ══════════════ PROJECT DETAIL ══════════════ -->
 <div class="page" id="page-project">
@@ -935,7 +906,7 @@ footer p {
   <div class="proj-layout">
     <div class="proj-meta-l">
       <div class="breadcrumb">
-        <button onclick="showPage('works')">Works</button>
+        <button onclick="showPage('home')">Works</button>
         <span>/</span>
         <span id="proj-breadcrumb">—</span>
       </div>
@@ -949,7 +920,7 @@ footer p {
   </div>
 
   <div class="proj-nav-bar">
-    <button class="pnav-back" onclick="showPage('works')">← All works</button>
+    <button class="pnav-back" onclick="showPage('home')">← All works</button>
     <div class="pnav-next" id="proj-next"></div>
   </div>
 
@@ -1284,10 +1255,6 @@ function showPage(id) {
     el.style.animation = '';
   }
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  if (id === 'works') {
-    document.getElementById('nav-works').classList.add('active');
-    buildWorksStrip(currentWorksCat);
-  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1674,38 +1641,7 @@ document.getElementById('page-project').addEventListener('click', (e) => {
   });
 });
 
-// ─── WORKS PAGE: click anywhere (not on card) closes detail ───
-document.getElementById('page-works').addEventListener('click', (e) => {
-  if (_lbJustClosed) return;
-  if (!expandedCardId) return;
-  const detail = document.getElementById('works-detail');
-  if (detail.contains(e.target) && e.target.tagName === 'IMG') return;
-  if (e.target.closest('.strip-card')) return;
-  closeCardDetail();
-});
 
-// ─── WORKS NAV: click to toggle dropdown ───
-;(function() {
-  const navItem = document.querySelector('.nav-item');
-  const navWorks = document.getElementById('nav-works');
-
-  navWorks.addEventListener('click', (e) => {
-    e.stopPropagation();
-    navItem.classList.toggle('open');
-  });
-
-  // 카테고리 클릭 시 드롭다운 닫기
-  navItem.querySelectorAll('.nav-dropdown-item').forEach(btn => {
-    btn.addEventListener('click', () => {
-      navItem.classList.remove('open');
-    });
-  });
-
-  // 외부 클릭 시 닫기
-  document.addEventListener('click', () => {
-    navItem.classList.remove('open');
-  });
-})();
 
 // ─── CUSTOM CURSOR ───
 ;(function() {
